@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 const token = require('./token.json');
 const { Database } = require('dbdjs.db');
-const fs = require('fs')
+const fs = require('fs');
 
 //database setup
 const db = new Database({
