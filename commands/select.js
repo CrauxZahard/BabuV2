@@ -1,7 +1,7 @@
 module.exports = {
   name: 'select',
   run: async (client, message, args) => {
-    const discord = require('discrod.js');
+    const discord = require('discord.js');
     const row = new discord.MessageActionRow()
 			.addComponents(
 				new discord.MessageSelectMenu()
