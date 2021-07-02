@@ -37,6 +37,6 @@ module.exports = {
 					]),
 			);
     
-    await message.channel.send({content: 'testing', components: [row] })
+    await message.channel.send({content: 'testing', components: [row], embeds: [{color: 'RED', description: 'embed pertama', author: {name: message.author.tag, icon_url: message.author.displayAvatarURL()} }, {color:'GREEN', description: 'embed kedua', author: {name: client.user.tag, icon_url: client.user.displayAvatarURL()} }] })
   }
 }
