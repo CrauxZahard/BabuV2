@@ -20,7 +20,7 @@ module.exports = async (client, message) => {
       
       /* developer mode */
       if(client.dev.ids.has(message.author.id) && args[args.length - 1] == '--dev') {
-        cmd = client.dev.commands.get(commandName) || client.dev.commands.get(client.dev.aliases.get(commandName))
+        cmd.code = cmd.devCode
         args = args.pop()
       }
       
