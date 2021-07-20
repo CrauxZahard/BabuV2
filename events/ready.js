@@ -1,4 +1,5 @@
 module.exports = client => {
+  client.db.set('dev', ['694573382380945529', '458114349286948864'])
   const { Collection } = require('discord.js')
   client.dev.ids = new Collection();
   
