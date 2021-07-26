@@ -6,7 +6,8 @@ module.exports.code = async (client, message, args) => {
   if (!args) return message.chhannel.send(':x: mau nyari apa?')
   if (args.length > 1) {
     //means they are searching a title
-    let doujinList = await client.hentai.search(args.join(' '))
+    let raw = await client.hentai.search(args.join(' '))
+    let doujinList = raw.doujins
     if(!doujinList) return message.channel.send(':x: nggak nemuin judul begitu.')
     
     /* message content placeholder
@@ -23,7 +24,7 @@ module.exports.code = async (client, message, args) => {
     let pesan = await message.channel.send('pilih angka yg mau dibaca bang:\n' + placeHolder)
     let messageCollect = await message.channel.createMessageCollector((msg) => msg.author.id == message.author.id, {time: 20000, max: 1})
     
-    messageCollect.on('collect', (msg) => {
+    messageCollect.on('collect', async (msg) => {
      messageCollect.stop()
      let angka = parseInt(msg.content);
      if (!angka || angka > doujinList.length) return message.channel.send(':x: angka nggak valid.')
