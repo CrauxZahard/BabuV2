@@ -4,7 +4,8 @@ module.exports.cooldown = 10
 ⬅️➡️
 
 module.exports.code = async (client, message, args) => {
-  let tryNumb = parseInt(args[0])
+  let tryNumb = parseInt(args[0]);
+  let collector, pesan;
   
   if (tryNumb && args.length > 1) {
     //searching a title
@@ -15,12 +16,14 @@ module.exports.code = async (client, message, args) => {
     }
     else if (doujinList.length == 1) {
       //1 result found
-      let pesan = message.channel.send({content: 'selamat membaca!', embed: {
+       pesan = message.channel.send({content: 'selamat membaca!', embed: {
         color: 'RANDOM',
-        title: doujinList[0].titlle.pretty,
-        image: {url: doujinList[0].pages[0].url}
+        title: doujinList[0].titles.pretty,
+        image: {url: doujinList[0].pages[0].url},
+        thumbnail: {url: doujinList[0].cover.url}
       }
                                        })
+      pesan.createReactionCollector()
     }
     else {
       //multiple result found
