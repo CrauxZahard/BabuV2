@@ -5,14 +5,20 @@ module.exports.cooldown = 10
 
 module.exports.code = async (client, message, args) => {
   let tryNumb = parseInt(args[0]);
-  let reactCollector, pesan, msgCollector, angka, doujinList;
+  let reactCollector, pesan, msgCollector, angka, doujinList, currentReact = 0;
   let currentPage = 0;
   
-  let filterReact = (reaction, user) => {
+  let reactFilter = (reaction, user) => {
     let abcd = reaction.emoji.name == '⬅️' ? 1 : reaction.emoji.name == '➡️' ? 1 : reaction.emoji.name == '❌' ? 1 : 0;
     let efgh = user.id == message.author.id ? 1 : 0;
     if (abcd == 1 && efgh == 1) return true;
     return false;
+  }
+  
+  let msgFilter = m => {
+    let numb = parseInt(m)
+    if (m <= doujinList.length && m.author.id == message.author.id) return true
+    return false
   }
   
   if (tryNumb && args.length > 1) {
@@ -34,10 +40,22 @@ module.exports.code = async (client, message, args) => {
       }
                                        })
       
-      reactCollector = await pesan.createReactionCollector(filterReact, {time: 1000 * 900})
+      reactCollector = await pesan.createReactionCollector(reactFilter, {time: 1000 * 900})
     }
     else {
       //multiple result found
+      let placeHolder = []
+      doujinList.forEach((doujin, index) => {
+        placeHolder.push = `${index + 1}). ${doujin.titles.pretty}`
+      })
+      pesan = message.channel.send({content: 'react atau ketik yang mau dibaca:\n' + placeHolder, embed: {
+        description: `Judul: ${doujinList[currentReact].titles.pretty}
+        Tag(s): ${doujinList[currentReact].tags.all.map(x => x.name)}
+        Fav: ${doujinList[currentReact].favorites}`,
+        image: {url: doujinList[currentReact].cover.url}
+      }})
+      msgCollector = await message.channel.createMessageCollector(msgFilter, {time: 1000 * 30})
+      reactCollector = await pesan.createMessageColelctor(reactFilter, {time: 1000 * 300})
     }
   }
   else if (tryNumb && args.length == 1) {
@@ -60,6 +78,18 @@ module.exports.code = async (client, message, args) => {
       image: {url: doujinList[angka ? angka : 0].pages[currentPage].url },
       thumbnail: {url: doujinList[angka ? angka: 0].cover.url},
       footer: {text: `halaman ${currentPage+1} dari ${doujinList[angka ? angka : 0].pages.length}`}
+    }})
+  })
+  
+  msgCollector.on('collect', (m) => {
+    angka = parseInt(m.content)
+    await msgCollector.stop()
+    await reactCollector.stop()
+    await pesan.edit({content: 'selamat membaca dan ingat dosa', embed: {
+      type: 'rich',
+      title: doujinList[angka].titles.pretty,
+      image: {url: doujinList[angka].pages[currentPage].url},
+      footer: {text: `Halaman ${currentPage+1} dari ${doujinList[angka].pages.length}`}
     }})
   })
   
