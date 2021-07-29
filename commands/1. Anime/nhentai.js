@@ -30,7 +30,7 @@ module.exports.code = async (client, message, args) => {
         title: doujinList[0].titles.pretty,
         image: {url: doujinList[0].pages[0].url},
         thumbnail: {url: doujinList[0].cover.url},
-        footer: {text: `halaman ${currentPage+1} dari ${doujinList[[0].pages.length}`}
+        footer: {text: `halaman ${currentPage+1} dari ${doujinList[0].pages.length}`}
       }
                                        })
       
