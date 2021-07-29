@@ -30,7 +30,7 @@ module.exports.code = async (client, message, args) => {
     }
     else if (doujinList.length == 1) {
       //1 result found
-       pesan = message.channel.send({content: 'selamat membaca! ||dan ingat dosa||', embed: {
+       pesan = message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embed: {
         type: 'rich',
         color: 'RANDOM',
         title: doujinList[0].titles.pretty,
