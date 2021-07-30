@@ -37,10 +37,13 @@ class nhentai {
       
       //lagi baca doujin
       collector.on('collect', async (r, u) => {
-        if (r.emoji.name == '⬅️' && currentReact-1 >= 1) currentReact -= 1
+        if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
         if (r.emoji.name == '➡️' && currentReact+1 <= doujin.pages.length) currentReact += 1
-        if (r.emoji.name == '❌') { await r.message.delete(); await collector.stop(); reject() }
-        
+        if (r.emoji.name == '❌') { await pesan.delete(); await collector.stop(); reject() }
+        pesan = new MessageEmbed()
+                .setTitle(doujin.titles.pretty)
+                .setColor('GREEN')
+                .setImage(doujin.pages[currentReact].url)
         await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
       })
       
