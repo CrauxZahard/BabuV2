@@ -59,3 +59,5 @@ class nhentai {
     console.log('a')
   }
 }
+
+module.exports = nhentai
