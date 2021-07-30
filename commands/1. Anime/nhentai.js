@@ -46,9 +46,10 @@ module.exports.code = async (client, message, args) => {
       //multiple result found
       let placeHolder = []
       doujinList.forEach((doujin, index) => {
-        placeHolder.push = `${index + 1}). ${doujin.titles.pretty}`
+        placeHolder.push(`${index + 1}). ${doujin.titles.pretty}`)
       })
       pesan = message.channel.send({content: 'react atau ketik yang mau dibaca:\n' + placeHolder, embed: {
+        type: 'rich',
         description: `Judul: ${doujinList[currentReact].titles.pretty}
         Tag(s): ${doujinList[currentReact].tags.all.map(x => x.name)}
         Fav: ${doujinList[currentReact].favorites}`,
@@ -67,6 +68,7 @@ module.exports.code = async (client, message, args) => {
   }
   
   reactCollector.on('collect', (reaction, user) => {
+    if (msgCollector) {await msgCollector.stop(); return true}
     if (reaction.emoji.name == '⬅️') {currentPage -= 1 };
     if (reaction.emoji.name == '➡️') {currentPage += 1};
     if (reaction.emoji.name == '❌') {await pesan.delete(); return true}
