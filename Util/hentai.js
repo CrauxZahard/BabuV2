@@ -56,7 +56,27 @@ class nhentai {
   }
  
   getSearch(query, message) {
-    console.log('a')
+    return new Promise(async (fullfill, reject) => {
+      let doujinList = await this.client.hentai.search(query)
+      
+      if (!doujinList) reject('ga ada judul begitu.')
+      
+      else if (doujinList.length == 1) {
+        this.doujinIndex = 0
+        let embed = new MessageEmbed()
+        .setTitle(doujinList.doujins[0].titles.pretty)
+        .setImage(doujinList.doujins[0].pages[0].url)
+        .setFooter(`halaman 1 dari ${doujinList.doujins.pages.length}`)
+        this.pesan = message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embed})
+  
+        }
+      
+      else {
+        let msgCollector = await message.channel.awaitMessages((m) => !isNaN(parseInt(m.content)), {max: 1, errors: ['time']})
+        msgCollector.on('collect', m => {this.doujinIndex = parseInt(m.content) + 1 })
+        }
+      
+      })
   }
 }
 
