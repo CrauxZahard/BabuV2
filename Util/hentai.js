@@ -44,7 +44,7 @@ class nhentai {
         await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
       })
       
-      collector.on('end', () => {
+      collector.on('end', async () => {
         await pesan.edit({content: '*pesan ini telah expired.*', embed})
         fullfill()
       })
