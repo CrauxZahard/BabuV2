@@ -21,7 +21,7 @@ module.exports.code = async (client, message, args) => {
     return false
   }
   
-  if (tryNumb && args.length > 1) {
+  if (isNaN(tryNumb) && args.length > 1) {
     //searching a title
     doujinList = await client.hentai.search(args.join(' '))
     if (!doujinList) {
@@ -67,7 +67,7 @@ module.exports.code = async (client, message, args) => {
     return message.channel.send('pen cari apa?')
   }
   
-  reactCollector.on('collect', (reaction, user) => {
+  reactCollector.on('collect', async (reaction, user) => {
     if (msgCollector) {await msgCollector.stop(); return true}
     if (reaction.emoji.name == '⬅️') {currentPage -= 1 };
     if (reaction.emoji.name == '➡️') {currentPage += 1};
@@ -83,7 +83,7 @@ module.exports.code = async (client, message, args) => {
     }})
   })
   
-  msgCollector.on('collect', (m) => {
+  msgCollector.on('collect', async (m) => {
     angka = parseInt(m.content)
     await msgCollector.stop()
     await reactCollector.stop()
