@@ -36,7 +36,7 @@ class nhentai {
       await pesan.react('➡️')
       
       //lagi baca doujin
-      collector.on('collect', (r, u) => {
+      collector.on('collect', async (r, u) => {
         if (r.emoji.name == '⬅️' && currentReact-1 >= 1) currentReact -= 1
         if (r.emoji.name == '➡️' && currentReact+1 <= doujin.pages.length) currentReact += 1
         if (r.emoji.name == '❌') { await r.message.delete(); await collector.stop(); reject() }
