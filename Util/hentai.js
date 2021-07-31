@@ -127,7 +127,14 @@ class nhentai {
         await pesan.react('⬇️')
         await pesan.react('✅')
         
-        let tempCollector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
+        let filter2 = (reaction, user) => {
+            let abcd = reaction.emoji.name == '⬆️' ? 1 : reaction.emoji.name == '⬇️' ? 1 : reaction.emoji.name == '❌' ? 1 : reaction.emoji.name == '✅' ? 1 : 0
+            let efgh = user.id == message.author.id ? 1 : 0
+            if (abcd == 1 && efgh == 1) return true
+            return false
+          }
+        
+        let tempCollector = await pesan.createReactionCollector(filter2, {time: 1000 * 900})
         let tempAwait = await message.channel.createMessageCollector((m) => !isNaN(parseInt(m.content)) && parseInt(m.content) <= doujinList.length, {
           max: 1,
           time: 1000 * 30
