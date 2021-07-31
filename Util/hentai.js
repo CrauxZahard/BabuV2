@@ -118,7 +118,7 @@ class nhentai {
         .setImage(doujinList[tempReact].cover.url)
         .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x =>  x.name).join(', ')}`)
         .setColor('GREEN')
-        let idk = doujinList.map((d, i) => {`${i+1}.) ${d.titles.pretty}`}).join('\n').split(`${tempReact+1}.)`).join(`\n--> ${currentReact+1}.) `)
+        let idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').split(`${tempReact+1}.)`).join(`\n--> ${currentReact+1}.) `)
         let pesan = await message.channel.send({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embed})
         
         //reaction sementara buat pilih doujin
