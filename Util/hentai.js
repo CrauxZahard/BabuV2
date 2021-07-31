@@ -1,9 +1,12 @@
 const { MessageEmbed } = require('discord.js')
 
 class nhentai {
+  
   constructor(client) {
     this.client = client
+    this.doujinIndex = 0
   }
+  
   getCode(code, message) {
     return new Promise(async (fullfill, reject) => {
       let doujin = await this.client.hentai.fetchDoujin(code)
@@ -40,7 +43,7 @@ class nhentai {
         if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
         if (r.emoji.name == '➡️' && currentReact+1 <= doujin.pages.length) currentReact += 1
         if (r.emoji.name == '❌') { await pesan.delete(); await collector.stop(); reject() }
-        pesan = new MessageEmbed()
+        embed = new MessageEmbed()
                 .setTitle(doujin.titles.pretty)
                 .setColor('GREEN')
                 .setImage(doujin.pages[currentReact].url)
@@ -72,8 +75,79 @@ class nhentai {
         }
       
       else {
-        let msgCollector = await message.channel.awaitMessages((m) => !isNaN(parseInt(m.content)), {max: 1, errors: ['time']})
-        msgCollector.on('collect', m => {this.doujinIndex = parseInt(m.content) + 1 })
+        let tempReact = 0
+        this.pesan = await message.channel.send({content: 'ketik angka atau react dengan ✅ yg mau dibaca:\n' + doujinList.doujins.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n'),
+                                                embed: {
+                                                  title: doujinList.doujins[tempReact].titles.pretty,
+                                                  image: {url: doujinList.doujins[tempReact].cover.url},
+                                                  color: 'GREEN'
+                                                }})
+        let msgCollector = await message.channel.awaitMessages((m) => !isNaN(parseInt(m.content)), {max: 1, time: 1000 * 180, errors: ['time']})
+        .catch(async (err) => {
+        await this.pesan.delete()
+          reject()
+        })
+        let currentReact = 0
+        let filter = (reaction, user) => {
+
+            let abcd = reaction.emoji.name == '⬆️' ? 1 : reaction.emoji.name == '⬇️' ? 1 : reaction.emoji.name == '✅' ? 1 : 0
+
+            let efgh = user.id == message.author.id ? 1 : 0
+
+            if (abcd == 1 && efgh == 1) return true
+
+            return false
+
+          }
+        
+        let tempReactCollector = await this.pesan.createReactionCollector(filter, {time: 1000 * 180})
+        
+        msgCollector.on('collect', async m => {this.doujinIndex = parseInt(m.content) - 1
+                                               await tempReactCollector.stop()})
+        tempReactCollector.on('collect', async (r, u) => {
+          if (r.emoji.name == '⬆️' && tempReact-1 >= 0) tempReact -= 1
+          if (r.emoji.name == '⬇️' && tempReact+1 <= doujinList.doujins.length) tempReact += 1
+          if (r.emoji.name == '✅') this.doujinIndex = tempReact
+          await msgCollector.stop()
+          await tempReactCollector.stop()
+          let embed = new MessageEmbed()
+          .setTitle(doujinList.doujins[this.doujinIndex].titles.pretty)
+          .setImage(doujinList.doujins[this.doujinIndex].pages[0].url)
+          .setFooter(`halaman ${currentReact+1} dari ${doujinList.doujins[this.doujinIndex].pages.length}`)
+          this.pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+          
+          let filter2 = (reaction, user) => {
+
+            let abcd = reaction.emoji.name == '➡️' ? 1 : reaction.emoji.name == '⬅️' ? 1 : reaction.emoji.name == '❌' ? 1 : 0
+
+            let efgh = user.id == message.author.id ? 1 : 0
+
+            if (abcd == 1 && efgh == 1) return true
+
+            return false
+
+          }
+          
+          let collector = this.pesan.createReactionCollector(filter2, {time: 1000 * 900})
+          
+          collector.on('collect', async (r, u) => {
+            if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
+            if (r.emoji.name == '➡️' && currentReact+1 <= doujinList.doujins[this.doujinIndex].pages.length) currentReact +=1
+
+
+        if (r.emoji.name == '❌') { await this.pesan.delete(); await collector.stop(); reject() }
+
+        embed = new MessageEmbed()
+
+                .setTitle(doujin.titles.pretty)
+
+                .setColor('GREEN')
+
+                .setImage(doujin.pages[currentReact].url)
+
+        await this.pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+            })
+          })
         }
       
       })
