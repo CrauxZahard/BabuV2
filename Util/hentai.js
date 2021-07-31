@@ -104,7 +104,7 @@ class nhentai {
         await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
         })
         
-        collector.on('end', () => {
+        collector.on('end', async () => {
           await pesan.edit({content: '*pesan ini telah expired.*', embed})
           fullfill()
         })
@@ -161,7 +161,7 @@ class nhentai {
             await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
             let collector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
             
-            collector.on('collect', (r, u) => {
+            collector.on('collect', async (r, u) => {
               if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
               if (r.emoji.name == '➡️' && currentReact+1 <= doujinList[tempReact].pages.length) currentReact += 1
               if (r.emoji.name == '❌') { await pesan.delete(); await collector.stop(); reject() }
@@ -173,7 +173,7 @@ class nhentai {
               await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
             })
             
-            collector.on('end', () => {
+            collector.on('end', async () => {
               await pesan.edit({content: '*pesan ini telah expired.*', embed})
             })
             
