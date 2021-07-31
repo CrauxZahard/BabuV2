@@ -169,7 +169,7 @@ class nhentai {
                 .setTitle(doujinList[tempReact].titles.pretty)
                 .setColor('GREEN')
                 .setImage(doujinList[tempReact].pages[currentReact].url)
-                .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[0].pages.length}`)
+                .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[tempReact].pages.length}`)
               await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
             })
             
