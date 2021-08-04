@@ -113,13 +113,12 @@ class nhentai {
       else {
         //multiple result
         let tempReact = 0
-        let regex = new RegExp(`[${tempReact+1}.\\)]`)
         let embed = new MessageEmbed()
         .setTitle(doujinList[tempReact].titles.pretty)
         .setImage(doujinList[tempReact].cover.url)
-        .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x =>  x.name).join(', ')}`)
+        .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x =>  x.name).join(', ')}\n\nFavorites: ${doujinList[tempReact].favorites}`)
         .setColor('GREEN')
-        let idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').replace(regex, `--> ${tempReact+1}.)`)
+        let idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').replace(`${tempReact+1}.)`, `--> ${tempReact+1}.)`)
         let pesan = await message.channel.send({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embed})
         
         //reaction sementara buat pilih doujin
@@ -181,9 +180,10 @@ class nhentai {
             if (r.emoji.name == '❌') { await pesan.delete(); await tempCollector.stop(); await tempAwait.stop(); reject() }
             embed = new MessageEmbed()
             .setTitle(doujinList[tempReact].titles.pretty)
-            .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x => x.name).join(', ')}\nFavorites: ${doujinList[tempReact].favorites}`)
+            .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x => x.name).join(', ')}\n\nFavorites: ${doujinList[tempReact].favorites}`)
             .setImage(doujinList[tempReact].cover.url) 
             .setColor('GREEN')
+            idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').replace(`${tempReact+1}.)`, `--> ${tempReact+1}.)`)
            await pesan.edit({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embed})
           }
           else {
