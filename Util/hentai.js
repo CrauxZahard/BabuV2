@@ -155,7 +155,12 @@ class nhentai {
           .setFooter(`halaman 1 dari ${doujinList[index].pages.length}`)
           .setColor('GREEN')
           
+          await tempCollector.stop()
+          await pesan.reactions.removeAll()
           await pesan.edit({content: 'selamat membaca! ||dan ingat dosa||', embed})
+          await pesan.react('❌')
+          await pesan.react('⬅️')
+          await pesan.react('➡️')
           
           let doujinCollector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
           
