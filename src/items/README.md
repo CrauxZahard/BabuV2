@@ -1,16 +1,16 @@
 # Item Class
 - Base Rarity:
-  - [Common](https://github.com/CrauxZahard/BabuV2/new/rpg#common)
-  - [Uncommon](https://github.com/CrauxZahard/BabuV2/new/rpg#uncommon)
-  - [Rare](https://github.com/CrauxZahard/BabuV2/new/rpg#rare)
-  - [Ultra Rare](https://github.com/CrauxZahard/BabuV2/new/rpg#ultra-rare)
-  - [Legendary](https://github.com/CrauxZahard/BabuV2/new/rpg#legendary)
+  - [Common](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#common)
+  - [Uncommon](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#uncommon)
+  - [Rare](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#rare)
+  - [Ultra Rare](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#ultra-rare)
+  - [Legendary](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#legendary)
  
   
 - Special Rarity:
-  - [Special](https://github.com/CrauxZahard/BabuV2/new/rpg#special)
-  - [Limited](https://github.com/CrauxZahard/BabuV2/new/rpg#limited)
-  - [Event](https://github.com/CrauxZahard/BabuV2/new/rpg#event)
+  - [Special](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#special)
+  - [Limited](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#limited)
+  - [Event](https://github.com/CrauxZahard/BabuV2/blob/rpg/src/items/README.md#event)
 
 ## Item Object
 | Param | Type | Optional? | Default Value | Description
