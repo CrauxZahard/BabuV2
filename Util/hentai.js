@@ -134,10 +134,43 @@ class nhentai {
             return false
           }
         
+        let msgFilter = (m) => {
+          let numb = parseInt(m.content) - 1
+          let isNumb = !isNaN(numb)
+          if (isNumb && numb <= doujinList.length - 1) return true
+          return false
+        }
+        
         let tempCollector = await pesan.createReactionCollector(filter2, {time: 1000 * 900})
-        let tempAwait = await message.channel.createMessageCollector((m) => !isNaN(parseInt(m.content)) && parseInt(m.content) <= doujinList.length, {
+        let tempAwait = await message.channel.createMessageCollector(msgFilter, {
           max: 1,
           time: 1000 * 30
+        })
+        
+        tempAwait.on('collect', async (m) => {
+          let index = parseInt(m.content) - 1
+          embed = new MessageEmbed()
+          .setTitle(doujinList[index].titles.pretty)
+          .setImage(doujinList[index].pages[currentReact].url)
+          .setFooter(`halaman 1 dari ${doujinList[index].pages.length}`)
+          .setColor('GREEN')
+          
+          await pesan.edit({content: 'selamat membaca! ||dan ingat dosa||', embed})
+          
+          let doujinCollector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
+          
+          doujinCollector.on('collect', async (r, u) => {
+              if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
+              if (r.emoji.name == '➡️' && currentReact+1 <= doujinList[index].pages.length) currentReact += 1
+              if (r.emoji.name == '❌') { await pesan.delete(); await doujinCollector.stop(); reject() }
+              embed = new MessageEmbed()
+                .setTitle(doujinList[index].titles.pretty)
+                .setColor('GREEN')
+                .setImage(doujinList[index].pages[currentReact].url)
+                .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[index].pages.length}`)
+              await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+            })
+          
         })
         
         tempCollector.on('collect', async (r, u) => {
