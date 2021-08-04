@@ -9,7 +9,7 @@ require('./handler/events.js')(client);
 require('./handler/file.js')(client);
 
 
-client.db = db
-client.hentai = new API()
-client.nh = new hentai(client)
-client.login(token)
+client.db = db;
+client.hentai = new API();
+client.nh = new hentai(client);
+client.login(token);
