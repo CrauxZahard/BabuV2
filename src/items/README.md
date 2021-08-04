@@ -8,9 +8,9 @@
  
   
 - Special Rarity:
-  - Special
-  - Limited
-  - Event
+  - [Special](https://github.com/CrauxZahard/BabuV2/new/rpg#special)
+  - [Limited](https://github.com/CrauxZahard/BabuV2/new/rpg#limited)
+  - [Event](https://github.com/CrauxZahard/BabuV2/new/rpg#event)
 
 ## Item Object
 | Param | Type | Optional? | Default Value | Description
