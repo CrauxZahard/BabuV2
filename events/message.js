@@ -9,7 +9,7 @@ module.exports = async (client, message) => {
       serverCooldown = client.db.server.get(message.guild.id)
     }
     
-    if (serverCooldown <= Date.now()) {
+    if (Number(BigInt(serverCooldown)) <= Number(BigInt(Date.now()))) {
       message.channel.send('a weapon is dropping!')
       client.db.server.add(message.guild.id, 1000 * 60)
     }
