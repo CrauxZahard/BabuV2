@@ -16,6 +16,7 @@ module.exports = async (client, message) => {
     
     if (serverCooldown <= Date.now()) {
       message.channel.send('a weapon is dropping!')
+      client.db.server.add(message.guild.id, 1000 * 60)
     }
     
     /* if args[0] is a commmand name/alias, execute it */
