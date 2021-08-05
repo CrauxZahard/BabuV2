@@ -4,6 +4,7 @@ const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Disc
 const { token } = require('./token.json');
 let hentai = require('./Util/hentai.js');
 
+require('./handler/database.js')(client);
 require('./handler/events.js')(client);
 require('./handler/file.js')(client);
 
