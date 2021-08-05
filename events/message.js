@@ -2,14 +2,9 @@ const ms = require('ms');
 module.exports = async (client, message) => {
   if (message.author.bot || message.channel.type == 'dm') return;
   let prefix = '-';
+  let serverCooldown = client.db.server.get(message.guild.id)
   
-  if(message.content.toLowerCase().startsWith(prefix)) {
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let commandName = args.shift().toLowerCase();
-    let cmd = client.commands.get(commandName) || client.commands.get(client.aliases.get(commandName));
-    let serverCooldown = client.db.server.get(message.guild.id)
-    
-    if (!serverCooldown) {
+  if (!serverCooldown) {
       client.db.server.add(message.guild.id, Date.now())
       serverCooldown = client.db.server.get(message.guild.id)
     }
@@ -18,6 +13,11 @@ module.exports = async (client, message) => {
       message.channel.send('a weapon is dropping!')
       client.db.server.add(message.guild.id, 1000 * 60)
     }
+  
+  if(message.content.toLowerCase().startsWith(prefix)) {
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let commandName = args.shift().toLowerCase();
+    let cmd = client.commands.get(commandName) || client.commands.get(client.aliases.get(commandName));
     
     /* if args[0] is a commmand name/alias, execute it */
     if(cmd) {
