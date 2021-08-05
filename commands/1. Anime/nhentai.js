@@ -5,6 +5,6 @@ module.exports.cooldown = 10
 module.exports.code = async (client, message, args) => {
   let number = parseInt(args[0])
   
-  if (!isNaN(number) && args.length == 1) await client.nh.getCode(number)
-  else { await client.nh.getSearch(args.join(' ')) }
+  if (!isNaN(number) && args.length == 1) await client.nh.getCode(number, message)
+  else { await client.nh.getSearch(args.join(' '), message) }
 }
