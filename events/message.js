@@ -5,13 +5,13 @@ module.exports = async (client, message) => {
   let serverCooldown = client.db.server.get(message.guild.id)
   
   if (!serverCooldown) {
-      client.db.server.add(message.guild.id, Date.now())
+      client.db.server.set(message.guild.id, Date.now())
       serverCooldown = client.db.server.get(message.guild.id)
     }
     
     if (Number(BigInt(serverCooldown)) <= Number(BigInt(Date.now()))) {
-      message.channel.send('a weapon is dropping!')
-      client.db.server.add(message.guild.id, 1000 * 60)
+      client.emit('cardDrop', client, message.channel)
+      client.db.server.set(message.guild.id, Date.now() + 30000)
     }
   
   if(message.content.toLowerCase().startsWith(prefix)) {
