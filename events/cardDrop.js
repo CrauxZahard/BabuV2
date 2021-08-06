@@ -1,4 +1,4 @@
-module.exports = (client, channel) => {
+module.exports = async (client, channel) => {
   let pesan = await channel.send('a card is dropping')
   const first = [() => pesan.react('1️⃣'), false]
   const second = [() => pesan.react('2️⃣'), false]
