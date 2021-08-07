@@ -30,7 +30,7 @@ class nhentai {
             return false
           }
            
-      let collector = pesan.createReactionCollector(filter, {time: 1000 * 900})
+      let collector = pesan.createReactionCollector({filter: filter, time: 1000 * 900})
       
       //reaction buat baca
       await pesan.react('❌')
@@ -90,7 +90,7 @@ class nhentai {
         await pesan.react('⬅️')
         await pesan.react('➡️')
         
-        let collector = pesan.createReactionCollector(filter, {time: 1000 * 900})
+        let collector = pesan.createReactionCollector({filter: filter, ime: 1000 * 900})
         
         collector.on('collect', async (r, u) => {
         if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
@@ -141,8 +141,8 @@ class nhentai {
           return false
         }
         
-        let tempCollector = await pesan.createReactionCollector(filter2, {time: 1000 * 900})
-        let tempAwait = await message.channel.createMessageCollector(msgFilter, {
+        let tempCollector = await pesan.createReactionCollector({filter: filter2, time: 1000 * 900})
+        let tempAwait = await message.channel.createMessageCollector({filter: msgFilter,
           max: 1,
           time: 1000 * 30
         })
@@ -162,7 +162,7 @@ class nhentai {
           await pesan.react('⬅️')
           await pesan.react('➡️')
           
-          let doujinCollector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
+          let doujinCollector = await pesan.createReactionCollector({filter: filter, time: 1000 * 900})
           
           doujinCollector.on('collect', async (r, u) => {
               if (r.emoji.name == '⬅️' && currentReact-1 >= 0) currentReact -= 1
