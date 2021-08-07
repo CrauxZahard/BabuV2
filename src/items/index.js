@@ -24,7 +24,7 @@ class Weapon {
     //use db.get() to fill the userWeapon
     item = userWeapon.filter(i => i.id == item.id)
     item[0].maxSkillSize += 1
-    database.set(item.owner, item)
+    database.set(item[0].owner, item)
   }
   
 }
