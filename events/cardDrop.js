@@ -1,44 +1,28 @@
+const ms = require('ms')
 module.exports = async (client, channel) => {
   let pesan = await channel.send('a card is dropping')
-  const first = [() => pesan.react('1️⃣'), false]
-  const second = [() => pesan.react('2️⃣'), false]
-  const third = [() => pesan.react('3️⃣'), false]
+  let first = false
+  let second = false
+  let third = false
   
-  await first[0]()
-  await second[0]()
-  await third[0]()
+  await pesan.react('1️⃣')
+  await pesan.react('2️⃣')
+  await pesan.react('3️⃣')
   
-  let collector = await pesan.createReactionCollector((r) => {
-    r.emoji.name == '1️⃣' || r.emoji.name == '2️⃣'  || r.emoji.name == '3️⃣'
-  }, {time: 1000 * 60})
+  const filter = r => { r.emoji.name == '3️⃣' || r.emoji.name == '2️⃣' || r.emoji.name == '1️⃣'}
   
-  collector.on('collect', async (r) => {
-    if (r.emoji.name == '1️⃣' && first[1] == false) {
-      setTimeout(() => {
-        let people = r.users.fetch()
-        first[1] == true
-        return channel.send('<@' + people[Math.floor(Math.random() * r.count)] + '>, u got the weapon!!')
-      }, 3000)
-    }
-    
-    if (r.emoji.name == '2️⃣' && second[1] == false) {
-      setTimeout(() => {
-        let people = r.users.fetch()
-        second[1] == false
-        return channel.send('<@' + people[Math.floor(Math.random() * r.count)] + '>, u got the weapon!!')
-      }, 3000)
-    }
-    
-    if (r.emoji.name == '3️⃣' && third[1] == false) {
-      setTimeout(() => {
-        let people = r.users.fetch()
-        third[1] == false
-        return channel.send('<@' + people[Math.floor(Math.random() * r.count)] + '>, u got the weapon!!')
-      }, 3000)
-    }    
+  const firstCollector = await pesan.createReactionCollector({filter: r => r.emoji.name == '1️⃣', time: 1000 * 60 })
+  const secondCollector = await pesan.createReactionCollector({filter: r => r.emoji.name == '2️⃣', time: 1000 * 60 })
+  const thirdCollector = await pesan.createReactionCollector({filter: r => r.emoji.name == '3️⃣', time: 1000 * 60 })
+  
+  let timestamp = {}
+  
+  firstCollector.on('collect', async (r, u) => {
+    timestamp[`1-${u.id}`] = Date.now
+    setTimeout(() => {
+      firstCollector.stop()
+    }, 3000)
   })
   
-  collector.on('end', async () => {
-    await pesan.edit('pesan ini telah expired.')
-  })
+  firstCollector.on('end', c => console.log('Collect: ' + c))
 }
