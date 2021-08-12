@@ -10,7 +10,7 @@ module.exports = async (client, message) => {
     }
     
     if (Number(BigInt(serverCooldown)) <= Number(BigInt(Date.now()))) {
-      client.emit('cardDrop', client, message.channel)
+      client.emit('cardDrop', message.channel)
       client.db.server.set(message.guild.id, Date.now() + 30000)
     }
   
