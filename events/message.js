@@ -2,6 +2,17 @@ const ms = require('ms');
 module.exports = async (client, message) => {
   if (message.author.bot || message.channel.type == 'dm') return;
   let prefix = '-';
+  let serverCooldown = client.db.server.get(message.guild.id)
+  
+  if (!serverCooldown) {
+      client.db.server.set(message.guild.id, Date.now())
+      serverCooldown = client.db.server.get(message.guild.id)
+    }
+    
+    if (Number(BigInt(serverCooldown)) <= Number(BigInt(Date.now()))) {
+      client.emit('cardDrop', client, message.channel)
+      client.db.server.set(message.guild.id, Date.now() + 30000)
+    }
   
   if(message.content.toLowerCase().startsWith(prefix)) {
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -10,19 +21,14 @@ module.exports = async (client, message) => {
     
     /* if args[0] is a commmand name/alias, execute it */
     if(cmd) {
-      let cooldown = client.db.get(`${message.author.id}-${cmd.name}.timestamp`)
+      let cooldown = client.db.user.get(`${message.author.id}-${cmd.name}.timestamp`)
       
       /*if user's cooldown is not in the database, set it*/
       if(!cooldown) {
-        client.db.add(`${message.author.id}-${cmd.name}.timestamp`, Date.now())
-        cooldown = client.db.get(`${message.author.id}-${cmd.name}.timestamp`)
+        client.db.user.add(`${message.author.id}-${cmd.name}.timestamp`, Date.now())
+        cooldown = client.db.user.get(`${message.author.id}-${cmd.name}.timestamp`)
       }
       
-      /* developer mode */
-      if(client.dev.ids.has(message.author.id) && args[args.length - 1] == '--dev') {
-        cmd.code = cmd.devCode
-        args = args.pop()
-      }
       
       /*if cooldown time (in ms) is smaller than current date (in ms), execute the command*/
       if(cooldown <= Date.now()) {
@@ -34,7 +40,7 @@ module.exports = async (client, message) => {
           console.log(e)
         }
         finally {
-          client.db.add(`${message.author.id}-${cmd.name}.timestamp`, cooldownAmount)
+          client.db.user.add(`${message.author.id}-${cmd.name}.timestamp`, cooldownAmount)
         }
       }
       
