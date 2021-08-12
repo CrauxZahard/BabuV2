@@ -18,7 +18,7 @@ module.exports = async (client, channel) => {
   let timestamp = {}
   
   firstCollector.on('collect', async (r, u) => {
-    timestamp[`1-${u.id}`] = Date.now
+    timestamp[`1-${u.id}`] = Date.now()
     setTimeout(() => {
       firstCollector.stop()
     }, 3000)
