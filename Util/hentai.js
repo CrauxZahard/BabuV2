@@ -22,7 +22,7 @@ class nhentai {
       .setColor('GREEN')
       .setImage(doujin.pages[currentReact].url)
       
-      let pesan = message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embed})
+      let pesan = message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
       let filter = (reaction, user) => {
             let abcd = reaction.emoji.name == '➡️' ? 1 : reaction.emoji.name == '⬅️' ? 1 : reaction.emoji.name == '❌' ? 1 : 0
             let efgh = user.id == message.author.id ? 1 : 0
@@ -47,11 +47,11 @@ class nhentai {
                 .setColor('GREEN')
                 .setImage(doujin.pages[currentReact].url)
                 .setFooter(`Halaman ke ${currentReact+1} dari ${doujin.pages.length}`)
-        await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+        await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
       })
       
       collector.on('end', async () => {
-        await pesan.edit({content: '*pesan ini telah expired.*', embed})
+        await pesan.edit({content: '*pesan ini telah expired.*', embeds: [embed]})
         fullfill()
       })
       
@@ -83,7 +83,7 @@ class nhentai {
         .setTitle(doujinList[0].titles.pretty)
         .setImage(doujinList[0].pages[0].url)
         .setFooter(`halaman 1 dari ${doujinList[0].pages.length}`)
-        let pesan = await message.channel.send({content: 'selamat membaca ||dan ingat  dosa||', embed})
+        let pesan = await message.channel.send({content: 'selamat membaca ||dan ingat  dosa||', embeds: [embed]})
         
         //reaction baca
         await pesan.react('❌')
@@ -101,11 +101,11 @@ class nhentai {
                 .setColor('GREEN')
                 .setImage(doujinList[0].pages[currentReact].url)
                 .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[0].pages.length}`)
-        await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+        await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
         })
         
         collector.on('end', async () => {
-          await pesan.edit({content: '*pesan ini telah expired.*', embed})
+          await pesan.edit({content: '*pesan ini telah expired.*', embeds: [embed]})
           fullfill()
         })
       }
@@ -119,7 +119,7 @@ class nhentai {
         .setDescription(`Tags: ${doujinList[tempReact].tags.all.map(x =>  x.name).join(', ')}\n\nFavorites: ${doujinList[tempReact].favorites}`)
         .setColor('GREEN')
         let idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').replace(`${tempReact+1}.)`, `--> ${tempReact+1}.)`)
-        let pesan = await message.channel.send({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embed})
+        let pesan = await message.channel.send({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embeds: [embed]})
         
         //reaction sementara buat pilih doujin
         await pesan.react('❌')
@@ -157,7 +157,7 @@ class nhentai {
           
           await tempCollector.stop()
           await pesan.reactions.removeAll()
-          await pesan.edit({content: 'selamat membaca! ||dan ingat dosa||', embed})
+          await pesan.edit({content: 'selamat membaca! ||dan ingat dosa||', embeds: [embed]})
           await pesan.react('❌')
           await pesan.react('⬅️')
           await pesan.react('➡️')
@@ -173,7 +173,7 @@ class nhentai {
                 .setColor('GREEN')
                 .setImage(doujinList[index].pages[currentReact].url)
                 .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[index].pages.length}`)
-              await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+              await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
             })
           
         })
@@ -189,7 +189,7 @@ class nhentai {
             .setImage(doujinList[tempReact].cover.url) 
             .setColor('GREEN')
             idk = doujinList.map((d, i) => `${i+1}.) ${d.titles.pretty}`).join('\n').replace(`${tempReact+1}.)`, `--> ${tempReact+1}.)`)
-           await pesan.edit({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embed})
+           await pesan.edit({content: 'pilih angka atau react yang mau dibaca:\n' + idk, embeds: [embed]})
           }
           else {
             await tempCollector.stop()
@@ -204,7 +204,7 @@ class nhentai {
             .setImage(doujinList[tempReact].cover.url) 
             .setColor('GREEN')
             .setFooter(`halaman 1 dari ${doujinList[tempReact].pages.length}`)
-            await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+            await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
             let collector = await pesan.createReactionCollector(filter, {time: 1000 * 900})
             
             collector.on('collect', async (r, u) => {
@@ -216,11 +216,11 @@ class nhentai {
                 .setColor('GREEN')
                 .setImage(doujinList[tempReact].pages[currentReact].url)
                 .setFooter(`Halaman ke ${currentReact+1} dari ${doujinList[tempReact].pages.length}`)
-              await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embed})
+              await pesan.edit({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
             })
             
             collector.on('end', async () => {
-              await pesan.edit({content: '*pesan ini telah expired.*', embed})
+              await pesan.edit({content: '*pesan ini telah expired.*', embeds: [embed]})
             })
             
           }
