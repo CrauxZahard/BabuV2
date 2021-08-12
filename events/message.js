@@ -1,7 +1,7 @@
 const ms = require('ms');
 module.exports = async (client, message) => {
   if (message.author.bot || message.channel.type == 'dm') return;
-  let prefix = '-';
+  let prefix = '.';
   let serverCooldown = client.db.server.get(message.guild.id)
   
   if (!serverCooldown) {
