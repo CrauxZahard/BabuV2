@@ -29,9 +29,7 @@ module.exports = async (client, channel) => {
   
   firstCollector.on('collect', async (r, u) => {
     timestamp.set(u.id, Date.now())
-    setTimeout(() => {
-      firstCollector.stop()
-    }, 3000)
+    await firstCollector.stop()
   })
   
   firstCollector.on('end', c => {
