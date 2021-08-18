@@ -4,7 +4,9 @@ module.exports = async (client, channel) => {
   let pesan = await channel.send('a card is dropping')
   let filter = (r, u) => {
     if (r.emoji.toString() == '1️⃣' || r.emoji.toString() == '2️⃣' || r.emoji.toString() == '3️⃣') { return true }
-    return false
+    console.log(r)
+    console.log(u)
+    return true
   }
   
   await pesan.react('1️⃣')
@@ -12,7 +14,7 @@ module.exports = async (client, channel) => {
   await pesan.react('3️⃣')
   
   let timestamp = new Collection()
-  let collector = pesan.createReactionCollector({filter: true, time: 1000 * 10})
+  let collector = pesan.createReactionCollector({filter: filter, time: 1000 * 10})
   
   collector.on('collect', (r, u) => {
     timestamp.set(u.id, Date.now())
