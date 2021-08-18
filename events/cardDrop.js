@@ -7,6 +7,10 @@ module.exports = async (client, channel) => {
     return false
   }
   
+  await pesan.react('1️⃣')
+  await pesan.react('2️⃣')
+  await pesan.react('3️⃣')
+  
   let timestamp = new Collection()
   let collector = pesan.cretaeReactionCollector({filter, time: 1000 * 10})
   
