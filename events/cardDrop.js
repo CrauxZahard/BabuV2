@@ -21,7 +21,7 @@ module.exports = async (client, channel) => {
   
   }
   
-  const firstCollector = await pesan.createReactionCollector({filter: filter, time: 1000 * 60 })
+  const firstCollector = await pesan.createReactionCollector({filter, time: 1000 * 60 })
   const secondCollector = await pesan.createReactionCollector({filter: r => r.emoji.name == '2️⃣', time: 1000 * 60 })
   const thirdCollector = await pesan.createReactionCollector({filter: r => r.emoji.name == '3️⃣', time: 1000 * 60 })
   
