@@ -31,8 +31,8 @@ module.exports = async (client, channel) => {
   })
   
   firstCollector.on('end', c => {
-    if (c.size == 1) return;
     c.delete(client.user.id)
+    if (c.size == 0) return;
     console.log('Collect: ' + JSON.stringify(c))
     const winner = timestamp.randomKey()
     channel.send(`<@${winner}> got it, time: ${ms(timestamp.get(winner) - now)}`)
