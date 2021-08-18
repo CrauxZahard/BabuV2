@@ -12,7 +12,7 @@ module.exports = async (client, channel) => {
   await pesan.react('3️⃣')
   
   let timestamp = new Collection()
-  let collector = pesan.createReactionCollector({filter, time: 1000 * 10})
+  let collector = pesan.createReactionCollector({filter: true, time: 1000 * 10})
   
   collector.on('collect', (r, u) => {
     timestamp.set(u.id, Date.now())
