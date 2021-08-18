@@ -2,9 +2,6 @@ const ms = require('ms')
 const { Collection } = require('discord.js')
 module.exports = async (client, channel) => {
   let pesan = await channel.send('a card is dropping')
-  let first = false
-  let second = false
-  let third = false
   
   await pesan.react('1️⃣')
   await pesan.react('2️⃣')
@@ -34,8 +31,10 @@ module.exports = async (client, channel) => {
   })
   
   firstCollector.on('end', c => {
+    if (c.size == 1) return;
+    c.delete(client.user.id)
     console.log('Collect: ' + JSON.stringify(c))
     const winner = timestamp.randomKey()
-    channel.send(`<@${winner}> got it, it took them blabla`)
+    channel.send(`<@${winner}> got it, time: ${ms(timestamp.get(winner) - now)}`)
   })
 }
