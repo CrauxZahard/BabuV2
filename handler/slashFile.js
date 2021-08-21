@@ -1,5 +1,5 @@
 const fs = require('fs')
-const { SlashCommand } = require('../Util/SlashCommand.js')
+const SlashCommand = require('../Util/SlashCommand.js')
 module.exports = client => {
   client.slash = new SlashCommand(client)
   
