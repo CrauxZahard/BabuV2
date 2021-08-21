@@ -1,5 +1,6 @@
 module.exports.name = "nhentai"
 module.exports.aliases = ["doujin", "nh", "search", "s"]
+module.exports.description = 'search a doujin with query or nuclear code'
 module.exports.cooldown = 10
 module.exports.options = [{
   name: 'Query',
