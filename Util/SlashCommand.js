@@ -48,3 +48,5 @@ class SlashCommand {
   }
   
 }
+
+module.exports = SlashCommand
