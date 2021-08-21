@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { token } = require('./token.json')
+const { token } = require('../token.json')
 class SlashCommand {
   constructor(client) {
     this.client = client
