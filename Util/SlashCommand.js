@@ -5,7 +5,7 @@ class SlashCommand {
     this.client = client
   }
   
-  addCommand(data) {
+  async addCommand(data) {
     let commandData = {
       name: data.name,
       type: 1,
@@ -13,20 +13,15 @@ class SlashCommand {
       options: data.options
     }
     
-    axios.post('https://discord.com/api/v8/applications/866931644983148554/commands', commandData, {
-     headers: {
-       Authorization: `Bot ${token}`
-     }
-    })
-    .then(res => {
-      console.log(res)
-      return res
-    })
-    .catch(err => {
+    let req = await this.client.api.applications(this.client.id).commands.post({
+      data: {
+        commandData
+      }
+    }).catch(err => {
       console.log(err)
       return;
     })
-    
+    return console.log(req)
   }
   
   updateCommand(commandId, newData) {
