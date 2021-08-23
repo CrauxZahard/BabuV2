@@ -8,7 +8,7 @@ class SlashCommand {
   async addCommand(data) {
     let commandData = {
       name: data.name,
-      type: 1,
+      type: data.type ?? 1,
       description: data.description,
       options: data.options
     }
