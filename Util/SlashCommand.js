@@ -22,7 +22,7 @@ class SlashCommand {
     return console.log(req)
   }
   
-  updateCommand(commandId, newData) {
+  async updateCommand(commandId, newData) {
     axios.patch(`https://discord.com/api/v8/applications/866931644983148554/commands/${commandId}`, newData, {
     headers: {
       Authorization: `Bot ${token}`
@@ -32,14 +32,21 @@ class SlashCommand {
     .catch(err => console.log(err))
   }
   
-  deleteCommand(commandId) {
-    axios.delete(`https://discord.com/api/v8/applications/866931644983148554/commands/${commandId}`, {
+  async deleteCommand(commandId) {
+    await axios.delete(`https://discord.com/api/v8/applications/866931644983148554/commands/${commandId}`, {
       headers: {
         Authorization: `Bot ${token}`
       }
     })
   }
   
+  async bulkOverwrite(commandList) {
+    await axios.put(`https://discord.com/api/v8/applications/866931644983148554/commands`, commandList, {
+      headers: {
+        Authorization: `Bot ${token}`
+      }
+    })
+  }
 }
 
 module.exports = SlashCommand
