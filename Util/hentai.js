@@ -22,7 +22,7 @@ class nhentai {
       .setColor('GREEN')
       .setImage(doujin.pages[currentReact].url)
       
-      let pesan = message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
+      let pesan = await message.channel.send({content: 'selamat membaca ||dan ingat dosa||', embeds: [embed]})
       let filter = (reaction, user) => {
             let abcd = reaction.emoji.name == '➡️' ? 1 : reaction.emoji.name == '⬅️' ? 1 : reaction.emoji.name == '❌' ? 1 : 0
             let efgh = user.id == message.author.id ? 1 : 0
